@@ -41,10 +41,10 @@ class AddNewItemsVC: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = UIColor.white.darken(byPercentage: 0.1)
+        imageView.backgroundColor = UIColor.white.darken(byPercentage: 0.05)
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).cgColor
+        imageView.layer.borderColor = UIColor.white.darken(byPercentage: 0.2).cgColor//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).cgColor
         
         
         return imageView
@@ -101,11 +101,11 @@ class AddNewItemsVC: UIViewController {
     private lazy var registerButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
+        button.backgroundColor = UIColor(named: "Color")//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
         button.titleLabel?.textColor = .white
         button.setTitle("Add Product", for: .normal)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(AddProductButtonTapped), for: .touchUpInside)
         return button
     }()
     // MARK: - Init
@@ -129,7 +129,11 @@ class AddNewItemsVC: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.isHidden = false
-       
+       navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color")!]
+        navigationController?.navigationBar.barTintColor = UIColor(named: "Color")
+        navigationController?.navigationBar.tintColor = UIColor(named: "Color1")
+        view.backgroundColor = UIColor.white.darken(byPercentage: 0.003)
+               title = "New Product"
         activityIndicator.stopAnimating()
         
        
@@ -138,9 +142,8 @@ class AddNewItemsVC: UIViewController {
     //MARK: - Design Methods
    
     func ConfigureView(){
-        navigationController?.navigationBar.barTintColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
-        view.backgroundColor = UIColor.white.darken(byPercentage: 0.003)
-        title = "Add New Product"
+        //UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
+       
         
        
     }
@@ -171,8 +174,8 @@ class AddNewItemsVC: UIViewController {
             
             profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
             profileImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 200),
-            profileImageView.heightAnchor.constraint(equalToConstant: 200),
+            profileImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
+            profileImageView.heightAnchor.constraint(equalToConstant: 250),
             
             ProductNameTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
             ProductNameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
@@ -224,7 +227,7 @@ class AddNewItemsVC: UIViewController {
         
     }
     
-    @objc func registerButtonTapped() {
+    @objc func AddProductButtonTapped() {
         if PhoneTextField.text == "" || ProductNameTextField.text == "" || TypeTextField.text == "" || PriceTextField.text == "" || profileImageView.image == nil{
             ShowError(message: "Must Enter All Data about Your Product")
 
@@ -239,14 +242,15 @@ class AddNewItemsVC: UIViewController {
                 if error != nil {
                     self.ShowError(message: error!.localizedDescription)
                 }else{
+                     
                     print("Product added")
                     self.PhoneTextField.text = ""
                     self.ProductNameTextField.text = ""
                     self.TypeTextField.text = ""
                     self.PriceTextField.text = ""
                     self.profileImageView.image = nil
-                    
-                     self.navigationController?.pushViewController(ItemsVC(), animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                    //self.navigationController?.pushViewController(ItemsVC(), animated: true)
                 }
             }
             
@@ -271,7 +275,7 @@ class AddNewItemsVC: UIViewController {
     // MARK: - Helper Functions
     
     func convertImageToBase64String (img: UIImage) -> String {
-        return img.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        return img.pngData()?.base64EncodedString() ?? ""
     }
     
     

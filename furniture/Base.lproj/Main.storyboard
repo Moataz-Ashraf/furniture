@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zhr-mm-7Dj">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zhr-mm-7Dj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +11,7 @@
         <!--LoginVC-->
         <scene sceneID="UY5-dU-tIK">
             <objects>
-                <viewController id="pkx-uK-cRP" customClass="LoginVC" customModule="MyInstagram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pkx-uK-cRP" customClass="LoginVC" customModule="furniture" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q4K-eW-Peu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,7 +26,7 @@
         <!--RegisterVC-->
         <scene sceneID="7lH-aY-xd8">
             <objects>
-                <viewController id="BwP-w3-ejc" customClass="RegisterVC" customModule="MyInstagram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BwP-w3-ejc" customClass="RegisterVC" customModule="furniture" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hjd-7v-ZBM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +60,6 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="zOE-sM-JwP"/>
                                         </constraints>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -79,7 +76,6 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FPW-xX-cWm"/>
                                             <constraint firstAttribute="height" constant="50" id="paR-Xm-QLm"/>
                                         </constraints>
-                                        <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -149,7 +145,7 @@
         <!--HomeVC-->
         <scene sceneID="sAr-Ts-Dhv">
             <objects>
-                <viewController id="Zhr-mm-7Dj" customClass="HomeVC" customModule="MyInstagram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Zhr-mm-7Dj" customClass="HomeVC" customModule="furniture" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l5H-64-iY4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

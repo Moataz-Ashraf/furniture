@@ -56,12 +56,7 @@ class ItemsVC : UIViewController{
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-       
-
-    }
+    
     
     
     @objc func handleSignOut() {
@@ -91,7 +86,7 @@ class ItemsVC : UIViewController{
             }
         } else {
             configureViewComponents()
-            LoadData()
+            self.LoadData()
         }
     }
     
@@ -139,28 +134,26 @@ class ItemsVC : UIViewController{
             print("Failed to sign out with error..", error)
         }
     }
-    func configureViewComponents() {
-        // view.backgroundColor = UIColor(white: 0.5, alpha: 0.2)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.isHidden = false
+       navigationController?.navigationBar.isHidden = false
 
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "Items"
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color2")!]
         
         
-        // navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "log-out"), style: .plain, target: self, action: #selector(handleSignOut))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddCell))
-        
-        navigationItem.rightBarButtonItem?.tintColor = .white
-        navigationItem.leftBarButtonItem?.tintColor = .white
-        navigationController?.navigationBar.barTintColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
-        
-        //UIColor(red:0.78, green:0.55, blue:0.16, alpha:1.0)
-        
-        
-        
-        navigationItem.rightBarButtonItem?.tintColor = .white
-        // navigationController?.navigationBar.barTintColor = UIColor.mainBlue()
+       navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddCell))
+       
+       navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "Color1")!//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
+       navigationItem.leftBarButtonItem?.tintColor = .black
+       navigationController?.navigationBar.barTintColor = UIColor(named: "Color")!
+        navigationController?.navigationBar.tintColor = UIColor(named: "Color1")!
+
+    }
+    func configureViewComponents() {
+     
         
         
         //Set TableView
@@ -171,7 +164,7 @@ class ItemsVC : UIViewController{
         CollectionView.delegate = self
         CollectionView.dataSource = self
         
-        CollectionView.backgroundColor =  UIColor.black
+        CollectionView.backgroundColor = UIColor.white.darken(byPercentage: 0.06)
         
         CollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0 , height: 0)
         CollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -218,14 +211,21 @@ extension ItemsVC : UICollectionViewDataSource, UICollectionViewDelegate ,UIColl
         
         let vc = ShowItemVC()
        
-        vc.BuContact.setTitle(shops[indexPath.row].Products.Phone, for: .normal)
+        //vc.BuContact.setTitle(shops[indexPath.row].Products.Phone, for: .normal)
         vc.imgView.image = convertBase64StringToImage(imageBase64String:shops[indexPath.row].Products.ProductImage)
-
-        vc.NameLabel.text = shops[indexPath.row].Products.ProductName
-        vc.NameShop.text = "Shop : \(shops[indexPath.row].Shop.NameShops)"
+        vc.title = shops[indexPath.row].Products.ProductName
+        vc.phoneNumber = shops[indexPath.row].Products.Phone
+        //vc.NameLabel.text = shops[indexPath.row].Products.ProductName
+        vc.ShopLabel.text = "Shop : \(shops[indexPath.row].Shop.NameShops)"
         vc.ItemPrice.text = "Price : \(shops[indexPath.row].Products.ProductPrice)"
-        vc.ItemType.text = "Type : \(shops[indexPath.row].Products.ProductType.description)"
-        navigationController?.pushViewController(vc, animated: true)
+        vc.TypeLabel.text = "Type : \(shops[indexPath.row].Products.ProductType.description)"
+        vc.BackgroundImageView.image = convertBase64StringToImage(imageBase64String:shops[indexPath.row].Products.ProductImage).blurred(radius: 30)
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+               navigationItem.backBarButtonItem = backBarButtonItem
+        
+
+        self.navigationController?.navigationBar.tintColor = UIColor(named: "Color1")!//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).darken(byPercentage: 0.1)
+            navigationController?.pushViewController(vc, animated: true)
         
     }
     

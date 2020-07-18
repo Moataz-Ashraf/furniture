@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         window?.makeKeyAndVisible()
         let navController = UINavigationController(rootViewController:HomeVC())
         navController.navigationBar.barStyle = .black
+        
         window?.rootViewController = navController
 
         return true

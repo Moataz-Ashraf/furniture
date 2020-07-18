@@ -32,7 +32,7 @@ class ShopsProfileVC : UIViewController{
     
     lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).darken(byPercentage: 0.05)
+        view.backgroundColor = UIColor(named: "Color")!//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).darken(byPercentage: 0.05)
         view.layer.cornerRadius = 50
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
@@ -52,8 +52,8 @@ class ShopsProfileVC : UIViewController{
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "living_room_light_window_balcony_sofa_table_80114_1350x2400")
-        iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "furniture-logo")
+        iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.layer.borderWidth = 3
         iv.layer.borderColor = UIColor.white.cgColor
@@ -62,7 +62,8 @@ class ShopsProfileVC : UIViewController{
     
     let AddImgButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "icons8-add-image-100-2").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "log-out"), for: .normal)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(signOut), for: .touchUpInside)
         //handleMessageUser
         return button
@@ -147,7 +148,8 @@ class ShopsProfileVC : UIViewController{
     @objc func handleMap() {
         
         let vc = MapVC()
-        present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+        //present(vc, animated: true, completion: nil)
         
         
     }
@@ -205,7 +207,7 @@ class ShopsProfileVC : UIViewController{
                
                 self.activityIndicator.stopAnimating()
                 
-                print("OKEy 1")
+                print("ShopsProfileVC")
 
             })
         
