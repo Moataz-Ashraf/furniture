@@ -1,20 +1,17 @@
 //
-//  Product.swift
-//  MyInstagram
+//  ProductOfShop.swift
+//  furniture
 //
-//  Created by Moataz on 4/23/20.
+//  Created by Moataz on 7/19/20.
 //  Copyright © 2020 Moataz. All rights reserved.
 //
 
 import Foundation
-
-struct Products : Codable {
+struct ProductOfShop : Codable {
     
    var Phone: String = ""
    var ProductImage: String = ""
     var ProductName: String = ""
     var ProductPrice: String = ""
-    var ProductType: String = ""
-    var NameShops: String = ""
-    var KeyOfProduct : String?
+    var ProductType: String = ""//CategoryOption
 }

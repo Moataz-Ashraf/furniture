@@ -11,7 +11,7 @@ extension CategoriesVC : UICollectionViewDelegate,UICollectionViewDataSource,UIC
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 3
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -50,8 +50,8 @@ extension CategoriesVC : UICollectionViewDelegate,UICollectionViewDataSource,UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        navigationController?.pushViewController(itemsVC(), animated: true)
+         let menuOption = CategoryOption(rawValue: indexPath.row)
+        navigationController?.pushViewController(itemsVC(ProductType: menuOption!.description), animated: true)
         
     }
     

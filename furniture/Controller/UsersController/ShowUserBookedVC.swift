@@ -1,22 +1,23 @@
 //
-//  itemsVC.swift
-//  MyInstagram
+//  ShowUserBookedVC.swift
+//  furniture
 //
-//  Created by Moataz on 4/19/20.
+//  Created by Moataz on 7/21/20.
 //  Copyright © 2020 Moataz. All rights reserved.
 //
+
 import UIKit
 import Firebase
 import FirebaseAuth
 
-class itemsVC : UIViewController {
+class ShowUserBookedVC : UIViewController {
 
     // MARK: - Properties
     fileprivate var activityIndicator : UIActivityIndicatorView!
     
     var  Items = [Products]()
-    //var KeyOfProduct : String!
-   
+   // var KeyOfProduct : String!
+   var segment = UISegmentedControl(items: ["Accepted","Request"])
     
     var imagePicker = UIImagePickerController()
 
@@ -35,18 +36,6 @@ class itemsVC : UIViewController {
 
     // MARK: - Init
 
-    private var ProductType : String!
-    
-    
-    init(ProductType : String ){
-        self.ProductType = ProductType
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,14 +43,7 @@ class itemsVC : UIViewController {
 
         authenticateUserAndConfigureView()
         
-        activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
-                activityIndicator.color = UIColor(named: "Color")!
-              activityIndicator.hidesWhenStopped = true
-               activityIndicator.startAnimating()
-               view.addSubview(activityIndicator)
-               activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-               activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-               activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+       
     
     }
     
@@ -70,17 +52,17 @@ class itemsVC : UIViewController {
    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+       
        navigationController?.navigationBar.isHidden = false
 
-        //navigationController?.navigationBar.backgroundColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)
+        
         
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = ProductType
-       // navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "Color3")!]
-        
-        
+        navigationItem.title = "Booked Items"
       
+        
+      //  self.navigationController?.navigationItem.backBarButtonItem?.action = #selector(backbuttonAction)
+        
        
         navigationController?.navigationBar.barTintColor = UIColor(named: "Color")!
         
@@ -89,7 +71,9 @@ class itemsVC : UIViewController {
     }
     
    
-
+//    @objc func backbuttonAction (){
+//        self.navigationController?.popToRootViewController(animated: true)
+//       }
     
 
    
@@ -102,28 +86,85 @@ class itemsVC : UIViewController {
             }
         } else {
             configureViewComponents()
-            LoadData()
+           
+            //LoadData(Accept: true)
+              
         }
     }
 
     // MARK: - API
    
+//    func LoadDataFromShops(CurUser:String ,NameShop : String) {
+//
+//   activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+//
+//                       activityIndicator.hidesWhenStopped = true
+//                        activityIndicator.startAnimating()
+//                        view.addSubview(activityIndicator)
+//                        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+//                        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//                        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//
+//             let ref2 = Database.database().reference().child("BookedItems").child(CurUser).child("Shops").child("MMMM")
+//
+//              ref2.observe(.childAdded, with: {(snapshot) in
+//
+//                 guard let productsFromType = snapshot.value as? [String:String] else { return }
+//
+//
+//
+//                               let NewShop = Products(Phone: productsFromType["Phone"]!, ProductImage: productsFromType["ProductImage"]!, ProductName: productsFromType["ProductName"]!, ProductPrice: productsFromType["ProductPrice"]!, ProductType: productsFromType["ProductType"]!,NameShops : productsFromType["NameShop"]!)
+//
+//                              self.Items.append(NewShop)
+//
+//                              self.CollectionView.reloadData()
+//
+//                     self.activityIndicator.stopAnimating()
+//
+//              })
+//
+//
+//
+//
+//    }
 
-
-     func LoadData() {
-        let ref = Database.database().reference().child("Products").child(ProductType)
+    func LoadData(Accept : Bool) {
+          Items = []
+        
+        activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+          activityIndicator.color = UIColor(named: "Color")!
+        activityIndicator.hidesWhenStopped = true
+         activityIndicator.startAnimating()
+         view.addSubview(activityIndicator)
+         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+         guard let CurUser = Auth.auth().currentUser?.uid else{return}
+        let ref = Database.database().reference().child("BookedItems").child(CurUser).child("Shops")
 
            
                ref.observe(.childAdded, with: {(snapshot) in
-               guard let productsFromType = snapshot.value as? [String:String] else { return }
-                 
-             //   self.KeyOfProduct = snapshot.key
+               // guard let shops = snapshot.children as? [String : [String:String]] else { return }
+                let ref2 = Database.database().reference().child("BookedItems").child(CurUser).child("Shops").child(snapshot.key)
                 
-                let NewShop = Products(Phone: productsFromType["Phone"]!, ProductImage: productsFromType["ProductImage"]!, ProductName: productsFromType["ProductName"]!, ProductPrice: productsFromType["ProductPrice"]!, ProductType: productsFromType["ProductType"]!,NameShops : productsFromType["NameShops"]!,KeyOfProduct: snapshot.key)
-                
-               self.Items.append(NewShop)
-               self.CollectionView.reloadData()
-               self.activityIndicator.stopAnimating()
+                 ref2.observe(.childAdded, with: {(snapshot) in
+                   
+                    guard let productsFromType = snapshot.value as? [String:Any] else { return }
+                                  
+                    if productsFromType["Accept"]as? Bool == Accept {
+                   
+                                  
+                    let NewShop = Products(Phone: productsFromType["Phone"]! as! String, ProductImage: productsFromType["ProductImage"]! as! String, ProductName: productsFromType["ProductName"]! as! String, ProductPrice: productsFromType["ProductPrice"]! as! String, ProductType: productsFromType["ProductType"]! as! String,NameShops : productsFromType["NameShop"]! as! String)
+                                  
+                                 self.Items.append(NewShop)
+                   
+                                 self.CollectionView.reloadData()
+                                 
+                    }
+                    self.activityIndicator.stopAnimating()
+                 })
+             
                
            })
        }
@@ -138,26 +179,55 @@ class itemsVC : UIViewController {
            let image = UIImage(data: imageData!)
            return image!
        }
+   @objc func changeVC(sender: UISegmentedControl) {
+        
+         switch sender.selectedSegmentIndex {
+         case 0:
+             self.Items = []
+            //self.CollectionView.reloadData()
+             LoadData(Accept: true)
+           // self.CollectionView.reloadData()
+             
+         case 1:
+              self.Items = []
+              // self.CollectionView.reloadData()
+              LoadData(Accept: false)
+            
+         default:
+             print("3")
+             
+         }
+     }
    
     func configureViewComponents() {
  
+        
+       //  segment.layer.cornerRadius = 5.0
+        segment.backgroundColor = UIColor(named: "Color")
+        segment.tintColor = .white
+         segment.selectedSegmentIndex = 0
+        segment.addTarget(self, action: #selector(changeVC), for: .valueChanged)
         //Set CollectioView
-
+       
         view.addSubview(CollectionView)
+         view.addSubview(segment)
         // CollectionView.translatesAutoresizingMaskIntoConstraints = false
 
+        
+        
         CollectionView.delegate = self
         CollectionView.dataSource = self
 
         CollectionView.backgroundColor = UIColor.white.darken(byPercentage: 0.06)
 
-        CollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0 , height: 0)
+        CollectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: segment.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0 , height: 0)
         CollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
+        segment.anchor(top:  nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
     }
 
 }
-extension itemsVC : UICollectionViewDataSource, UICollectionViewDelegate ,UICollectionViewDelegateFlowLayout{
+extension ShowUserBookedVC : UICollectionViewDataSource, UICollectionViewDelegate ,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Items.count
     }
@@ -195,22 +265,24 @@ extension itemsVC : UICollectionViewDataSource, UICollectionViewDelegate ,UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let vc = ShowItemVC()
+        
+        vc.BuBooked.isHidden = true
         vc.BuAccept.isHidden = true
         vc.BuDelete.isHidden = true
-        vc.KeyOfProduct = Items[indexPath.row].KeyOfProduct
-        vc.CurType = Items[indexPath.row].ProductType.description
-        vc.CurShop = Items[indexPath.row].NameShops
+       
      vc.imgView.image = convertBase64StringToImage(imageBase64String:Items[indexPath.row].ProductImage)
       vc.title = Items[indexPath.row].ProductName
       vc.phoneNumber = Items[indexPath.row].Phone
-      //vc.NameLabel.text = shops[indexPath.row].Products.ProductName
+      
       vc.ShopLabel.text = "Shop : \(Items[indexPath.row].NameShops)"
-      vc.ItemPrice.text = "Price : \(Items[indexPath.row].ProductPrice) $"
+      vc.ItemPrice.text = "Price : \(Items[indexPath.row].ProductPrice)"
         vc.TypeLabel.text = "Type : \(Items[indexPath.row].ProductType.description)"
       vc.BackgroundImageView.image = convertBase64StringToImage(imageBase64String:Items[indexPath.row].ProductImage).blurred(radius: 30)
+        
+        
       let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
              navigationItem.backBarButtonItem = backBarButtonItem
-      
+
 
       self.navigationController?.navigationBar.tintColor = UIColor(named: "Color1")!//UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).darken(byPercentage: 0.1)
           navigationController?.pushViewController(vc, animated: true)
@@ -225,7 +297,5 @@ extension itemsVC : UICollectionViewDataSource, UICollectionViewDelegate ,UIColl
 
 
 
-
-//MARK: - Image Picker
 
 

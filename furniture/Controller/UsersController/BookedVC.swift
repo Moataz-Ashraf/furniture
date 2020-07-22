@@ -11,15 +11,20 @@ import Firebase
 
 class BookedVC: UIViewController {
     // MARK: - Properties
-    private var curImage : UIImage!
+    var curImage : UIImage!
+    var curKeyOfProduct : String!
+    var CurShop : String!
+    var CurType : String!
+    var ClientName : String?
+    var ClientImage : String?
+    var Productvalues : [String : Any]?
     
-    
-    init(CurImage : UIImage ){
-        self.curImage = CurImage
-        
+    init(curKeyOfProduct : String ){
+        self.curKeyOfProduct = curKeyOfProduct
+
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -59,33 +64,34 @@ class BookedVC: UIViewController {
             return imageView
         }()
         
-        private lazy var ProductNameTextField: UITextField = {
-            let textField = UITextField()
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont.systemFont(ofSize: 14)
-            textField.borderStyle = .roundedRect
-            textField.tintColor = .red
-            textField.placeholder = "Phone Number"
-            return textField
-        }()
+//        private lazy var ProductNameTextField: UITextField = {
+//            let textField = UITextField()
+//            textField.translatesAutoresizingMaskIntoConstraints = false
+//            textField.font = UIFont.systemFont(ofSize: 14)
+//            textField.borderStyle = .roundedRect
+//            textField.tintColor = .red
+//            textField.placeholder = "Phone Number"
+//            return textField
+//        }()
         
-        private lazy var TypeTextField: UITextField = {
+//         lazy var LocationTextField: UITextField = {
+//            let textField = UITextField()
+//            textField.translatesAutoresizingMaskIntoConstraints = false
+//            textField.font = UIFont.systemFont(ofSize: 14)
+//            textField.borderStyle = .roundedRect
+//            textField.tintColor = .red
+//            textField.placeholder = "Location"
+//            textField.addTarget(self , action: #selector(ShowType), for: .editingDidBegin)
+//            return textField
+//        }()
+        private lazy var DescriptionTextField: UITextField = {
             let textField = UITextField()
             textField.translatesAutoresizingMaskIntoConstraints = false
             textField.font = UIFont.systemFont(ofSize: 14)
             textField.borderStyle = .roundedRect
             textField.tintColor = .red
-            textField.placeholder = "Country"
-            textField.addTarget(self , action: #selector(ShowType), for: .editingDidBegin)
-            return textField
-        }()
-        private lazy var PriceTextField: UITextField = {
-            let textField = UITextField()
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.font = UIFont.systemFont(ofSize: 14)
-            textField.borderStyle = .roundedRect
-            textField.tintColor = .red
-            textField.placeholder = "Location"
+            textField.placeholder = "Description Address"
+            
             return textField
         }()
         private lazy var PhoneTextField: UITextField = {
@@ -98,15 +104,15 @@ class BookedVC: UIViewController {
             textField.placeholder = "Phone Number"
             return textField
         }()
-        private lazy var TextLabel: UILabel = {
-            let label = UILabel()
-            label.textAlignment = .center
-            label.text = " Shop Name "
-            label.font = UIFont.boldSystemFont(ofSize: 26)
-            label.textColor = .white
-            return label
-        }()
-        
+//        private lazy var TextLabel: UILabel = {
+//            let label = UILabel()
+//            label.textAlignment = .center
+//            label.text = " Shop Name "
+//            label.font = UIFont.boldSystemFont(ofSize: 26)
+//            label.textColor = .white
+//            return label
+//        }()
+//
         private lazy var registerButton: UIButton = {
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -123,7 +129,7 @@ class BookedVC: UIViewController {
             super.viewDidLoad()
             LayoutUI()
             activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
-            
+             activityIndicator.color = UIColor(named: "Color")!
             activityIndicator.hidesWhenStopped = true
             activityIndicator.startAnimating()
             view.addSubview(activityIndicator)
@@ -159,10 +165,10 @@ class BookedVC: UIViewController {
             view.addSubview(scrollView)
             scrollView.addSubview(containerView)
             containerView.addSubview(profileImageView)
-            containerView.addSubview(ProductNameTextField)
-            containerView.addSubview(TypeTextField)
-            containerView.addSubview(PriceTextField)
             containerView.addSubview(PhoneTextField)
+            containerView.addSubview(DescriptionTextField)
+          //  containerView.addSubview(LocationTextField)
+            //containerView.addSubview(PhoneTextField)
             containerView.addSubview(registerButton)
             
         }
@@ -184,25 +190,25 @@ class BookedVC: UIViewController {
                 profileImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-30),
                 profileImageView.heightAnchor.constraint(equalToConstant: 250),
                 
-                ProductNameTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
-                ProductNameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-                ProductNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-                
-                TypeTextField.topAnchor.constraint(equalTo: ProductNameTextField.bottomAnchor, constant: 8),
-                TypeTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-                TypeTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-
-                
-               PriceTextField.topAnchor.constraint(equalTo: TypeTextField.bottomAnchor, constant: 8),
-                PriceTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-                PriceTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-                
-                
-               PhoneTextField.topAnchor.constraint(equalTo:  PriceTextField.bottomAnchor, constant: 8),
+               PhoneTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
                 PhoneTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
                 PhoneTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
                 
-                registerButton.topAnchor.constraint(equalTo: PhoneTextField.bottomAnchor, constant: 8),
+                DescriptionTextField.topAnchor.constraint(equalTo: PhoneTextField.bottomAnchor, constant: 8),
+                DescriptionTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+                DescriptionTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+
+
+//               LocationTextField.topAnchor.constraint(equalTo: DescriptionTextField.bottomAnchor, constant: 8),
+//                LocationTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+//                LocationTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+
+//
+//               PhoneTextField.topAnchor.constraint(equalTo:  PriceTextField.bottomAnchor, constant: 8),
+//                PhoneTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+//                PhoneTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+                
+                registerButton.topAnchor.constraint(equalTo: DescriptionTextField.bottomAnchor, constant: 8),
                 registerButton.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 3/4),
                 registerButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
                 registerButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
@@ -215,53 +221,99 @@ class BookedVC: UIViewController {
             ConfigureView()
             AddSubView()
             Constraints()
+            LoadData()
         }
         
         //MARK: - Selector Methods
         
         @objc func ShowType(){
-            let ac = UIAlertController(title: "Select Type", message: nil, preferredStyle: .actionSheet)
+           // let ac = MapVC()
             
-            for CategoryOption in CategoryOption.allCases {
-                
-                ac.addAction(UIAlertAction(title: CategoryOption.description , style: .default){
-                    (action) in
-                    self.TypeTextField.text = CategoryOption.description
-                })
-            }
-            TypeTextField.isEnabled = false
-            present(ac, animated: true, completion: nil)
+            
+                   // self.TypeTextField.text = "CategoryOption.description"
+               
+            
+           // self.present(ac, animated: true, completion: nil)
             
         }
+    func LoadData(){
+        // = ["ProductType" : CurType! ,"KeyOfProduct" :curKeyOfProduct!
+       
+        let ref = Database.database().reference().child("Products").child(CurType).child(curKeyOfProduct)
+
+                  
+        ref.observe(.value, with: {(snapshot) in
+                       guard let productsFromType = snapshot.value as? [String:Any] else { return }
+                         
+                             
+                  
+                                              
+            self.Productvalues = ["Phone" : productsFromType["Phone"]!, "ProductImage" : productsFromType["ProductImage"]!, "ProductName" : productsFromType["ProductName"]!, "ProductPrice" : productsFromType["ProductPrice"]!, "ProductType" : productsFromType["ProductType"]!,"NameShop" : productsFromType["NameShops"]! ,"Accept" : false]
+                         
+                       
+                              
+                        })
         
+        guard let CurUser = Auth.auth().currentUser?.uid else{return}
+                      Database.database().reference().child("Users").child(CurUser).observe(.value, with: {(snapshot) in
+                                     guard let Shop = snapshot.value as?[String : Any] else { return }
+                                     self.ClientName = Shop["UserName"] as? String
+                                     self.ClientImage =  Shop["ProfileImage"] as? String
+                        })
+    }
+     
+    
         @objc func registerButtonTapped() {
-            if PhoneTextField.text == "" || ProductNameTextField.text == "" || TypeTextField.text == "" || PriceTextField.text == "" || profileImageView.image == nil{
-                ShowError(message: "Must Enter All Data about Your Product")
+            //|| LocationTextField.text == ""
+            activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+            
+            activityIndicator.color = UIColor(named: "Color")!
+            activityIndicator.hidesWhenStopped = true
+             activityIndicator.startAnimating()
+             view.addSubview(activityIndicator)
+             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            self.registerButton.isEnabled = false
+            
+            if PhoneTextField.text == ""   || DescriptionTextField.text == "" || profileImageView.image == nil{
+                ShowError(message: "Must Enter All Data Above")
 
             }else{
-                guard let CurUser = Auth.auth().currentUser?.uid else{return}
                 
-                let values : [String : Any] = ["ProductName" : ProductNameTextField.text! , "ProductType" : TypeTextField.text! ,"ProductPrice" : PriceTextField.text! ,"Phone" : PhoneTextField.text! ,"ProductImage":convertImageToBase64String(img: profileImageView.image!)]
+               guard let CurUser = Auth.auth().currentUser?.uid else{return}
                 
-                let ref = Database.database().reference().child("Shops")
-                ref.child(CurUser).child("Products").childByAutoId().setValue(values){
+                let Uservalues : [String : Any] = ["DescriptionAddress" : DescriptionTextField.text! ,"Phone" : PhoneTextField.text! ,"ClientName": self.ClientName!,"ClientImage":self.ClientImage!]
+                
+                //"UserLocation" : LocationTextField.text! ,
+                
+                let ref = Database.database().reference().child("BookedItems")
+                
+                ref.child(CurUser).child("Shops").child(self.CurShop).childByAutoId().setValue(Productvalues)
+                ref.child(CurUser).child("UserData").setValue(Uservalues){
                     (error,ref) in
                     if error != nil {
                         self.ShowError(message: error!.localizedDescription)
+                      self.registerButton.isEnabled = true
+                        self.activityIndicator.stopAnimating()
                     }else{
+                       self.registerButton.isEnabled = true
+                        self.activityIndicator.stopAnimating()
+                        self.ShowError(message: "Booked Complete")
+                        
+                        
                         print("Product added")
                         self.PhoneTextField.text = ""
-                        self.ProductNameTextField.text = ""
-                        self.TypeTextField.text = ""
-                        self.PriceTextField.text = ""
+                        self.DescriptionTextField.text = ""
+                        //self.LocationTextField.text = ""
+
                         self.profileImageView.image = nil
                         
-                         self.navigationController?.pushViewController(ItemsVC(), animated: true)
                     }
                 }
                 
             }
-            
+           
             
         }
         
@@ -278,15 +330,25 @@ class BookedVC: UIViewController {
             let image = UIImage(data: imageData!)
             return image!
         }
-        func ShowError(message : String){
+         func ShowError(message : String){
             
-            let alert = UIAlertController(title: "Error Message", message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Notify message", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                let vc = ShowUserBookedVC()
+                vc.LoadData(Accept: false)
+                vc.segment.selectedSegmentIndex = 1
+                
+               // vc.navigationItem.backBarButtonItem?.action = #selector(self.backbuttonAction)
+                self.navigationController?.pushViewController(vc, animated: true)
+                
                 alert.dismiss(animated: true, completion: nil)
+               
             }) )
             present(alert, animated: true, completion: nil)
             
         }
+   
+   
         
         
     }

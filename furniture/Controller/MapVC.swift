@@ -23,6 +23,14 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate,UISear
             
                     return mv
     }()
+    
+    var DoneButton:UIButton = {
+            let button = UIButton(type: .system)
+            button.setImage(#imageLiteral(resourceName: "padlock").withRenderingMode(.alwaysOriginal), for: .normal)
+            button.addTarget(self, action: #selector(DoneButtonAction) , for: .touchUpInside)
+            return button
+    
+        }()
             var locationManager:CLLocationManager!
     var currentLocationStr = "Current Location"
 
@@ -99,9 +107,21 @@ class MapVC: UIViewController,MKMapViewDelegate,CLLocationManagerDelegate,UISear
     
     
             view.addSubview(mMapView)
+        view.addSubview(DoneButton)
+
         mMapView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
             
+        DoneButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 15, width: 60, height: 60)
     
+    
+        }
+    
+    @objc func  DoneButtonAction(){
+        
+           
+        
+      
+        self.dismiss(animated: true, completion: nil)
     
         }
 }

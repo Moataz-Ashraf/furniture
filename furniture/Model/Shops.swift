@@ -10,9 +10,9 @@ import Foundation
 struct Shops : Codable  {
     
     var Shop : Shop
-    var Products : Products
+    var Products : ProductOfShop
     
-    init(Shop :Shop ,Products :Products) {
+    init(Shop :Shop ,Products :ProductOfShop) {
         
          self.Shop = Shop
          self.Products = Products

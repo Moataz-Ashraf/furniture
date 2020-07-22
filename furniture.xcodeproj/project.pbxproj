@@ -18,6 +18,14 @@
 		7623BEF32417D9B40093214F /* CustomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7623BEF22417D9B40093214F /* CustomCollectionView.swift */; };
 		7623BF09241922D90093214F /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7623BF08241922D80093214F /* MenuOptionCell.swift */; };
 		7660B1CB24C25D540085FBA0 /* BookedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1CA24C25D540085FBA0 /* BookedVC.swift */; };
+		7660B1CD24C494680085FBA0 /* ProductOfShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1CC24C494680085FBA0 /* ProductOfShop.swift */; };
+		7660B1CF24C50C480085FBA0 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1CE24C50C480085FBA0 /* CustomTabBar.swift */; };
+		7660B1D124C5DC700085FBA0 /* UserTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1D024C5DC700085FBA0 /* UserTabBarVC.swift */; };
+		7660B1D324C5FDC20085FBA0 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1D224C5FDC20085FBA0 /* UserProfileVC.swift */; };
+		7660B1D524C65F490085FBA0 /* ShowUserBookedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1D424C65F490085FBA0 /* ShowUserBookedVC.swift */; };
+		7660B1D724C72F7F0085FBA0 /* ShopsBookedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1D624C72F7F0085FBA0 /* ShopsBookedVC.swift */; };
+		7660B1D924C7382C0085FBA0 /* ClientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1D824C7382B0085FBA0 /* ClientData.swift */; };
+		7660B1DB24C74AC80085FBA0 /* ShowDetialsBookedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7660B1DA24C74AC80085FBA0 /* ShowDetialsBookedVC.swift */; };
 		76791FF5244BAE120097D2C8 /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791FF4244BAE120097D2C8 /* MenuOption.swift */; };
 		76791FF7244BAE170097D2C8 /* Shops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791FF6244BAE170097D2C8 /* Shops.swift */; };
 		76791FFA244BAEA60097D2C8 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791FF9244BAEA60097D2C8 /* HomeController.swift */; };
@@ -59,6 +67,14 @@
 		7623BEF22417D9B40093214F /* CustomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionView.swift; sourceTree = "<group>"; };
 		7623BF08241922D80093214F /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
 		7660B1CA24C25D540085FBA0 /* BookedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookedVC.swift; sourceTree = "<group>"; };
+		7660B1CC24C494680085FBA0 /* ProductOfShop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOfShop.swift; sourceTree = "<group>"; };
+		7660B1CE24C50C480085FBA0 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		7660B1D024C5DC700085FBA0 /* UserTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTabBarVC.swift; sourceTree = "<group>"; };
+		7660B1D224C5FDC20085FBA0 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
+		7660B1D424C65F490085FBA0 /* ShowUserBookedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowUserBookedVC.swift; sourceTree = "<group>"; };
+		7660B1D624C72F7F0085FBA0 /* ShopsBookedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopsBookedVC.swift; sourceTree = "<group>"; };
+		7660B1D824C7382B0085FBA0 /* ClientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientData.swift; sourceTree = "<group>"; };
+		7660B1DA24C74AC80085FBA0 /* ShowDetialsBookedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetialsBookedVC.swift; sourceTree = "<group>"; };
 		76791FF4244BAE120097D2C8 /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
 		76791FF6244BAE170097D2C8 /* Shops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shops.swift; sourceTree = "<group>"; };
 		76791FF9244BAEA60097D2C8 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -159,9 +175,11 @@
 				76791FF6244BAE170097D2C8 /* Shops.swift */,
 				7679202E24539F3B0097D2C8 /* Shop.swift */,
 				7679202A24521A070097D2C8 /* Products.swift */,
+				7660B1CC24C494680085FBA0 /* ProductOfShop.swift */,
 				76792010244CA4040097D2C8 /* CategoryOption.swift */,
 				76791FF4244BAE120097D2C8 /* MenuOption.swift */,
 				76792016244CD1CC0097D2C8 /* Furniture.swift */,
+				7660B1D824C7382B0085FBA0 /* ClientData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -214,6 +232,10 @@
 				7679201A244CF7270097D2C8 /* itemsVC.swift */,
 				7679201C244CFC870097D2C8 /* ShowItemVC.swift */,
 				7660B1CA24C25D540085FBA0 /* BookedVC.swift */,
+				7660B1CE24C50C480085FBA0 /* CustomTabBar.swift */,
+				7660B1D024C5DC700085FBA0 /* UserTabBarVC.swift */,
+				7660B1D224C5FDC20085FBA0 /* UserProfileVC.swift */,
+				7660B1D424C65F490085FBA0 /* ShowUserBookedVC.swift */,
 			);
 			path = UsersController;
 			sourceTree = "<group>";
@@ -226,6 +248,8 @@
 				767920262450B5E70097D2C8 /* ShopsProfileVC+Extention.swift */,
 				7679202024508F3B0097D2C8 /* ItemsVC.swift */,
 				767920282450DEC70097D2C8 /* AddNewItemsVC.swift */,
+				7660B1D624C72F7F0085FBA0 /* ShopsBookedVC.swift */,
+				7660B1DA24C74AC80085FBA0 /* ShowDetialsBookedVC.swift */,
 			);
 			name = AdminController;
 			sourceTree = "<group>";
@@ -381,20 +405,28 @@
 				76792015244CB8640097D2C8 /* HomeCell.swift in Sources */,
 				7679201D244CFC870097D2C8 /* ShowItemVC.swift in Sources */,
 				76792011244CA4040097D2C8 /* CategoryOption.swift in Sources */,
+				7660B1CD24C494680085FBA0 /* ProductOfShop.swift in Sources */,
 				76791FFA244BAEA60097D2C8 /* HomeController.swift in Sources */,
 				7623BF09241922D90093214F /* MenuOptionCell.swift in Sources */,
 				762280AC23EE0A9C00B269A2 /* RegisterVC.swift in Sources */,
 				762280B123EE0B1600B269A2 /* HomeVC.swift in Sources */,
 				7679200B244C994D0097D2C8 /* CategoriesVC.swift in Sources */,
 				7679202B24521A070097D2C8 /* Products.swift in Sources */,
+				7660B1D324C5FDC20085FBA0 /* UserProfileVC.swift in Sources */,
 				76792003244BB2180097D2C8 /* protocols.swift in Sources */,
 				76792013244CB10B0097D2C8 /* HomeVC+Extenion.swift in Sources */,
 				7660B1CB24C25D540085FBA0 /* BookedVC.swift in Sources */,
 				7679200D244C9EEC0097D2C8 /* CategoriesVC+Extenion.swift in Sources */,
+				7660B1D724C72F7F0085FBA0 /* ShopsBookedVC.swift in Sources */,
 				767920252450ADD20097D2C8 /* MapVC.swift in Sources */,
+				7660B1CF24C50C480085FBA0 /* CustomTabBar.swift in Sources */,
 				762280AE23EE0ADA00B269A2 /* LoginVC.swift in Sources */,
+				7660B1D124C5DC700085FBA0 /* UserTabBarVC.swift in Sources */,
 				76791FF7244BAE170097D2C8 /* Shops.swift in Sources */,
+				7660B1DB24C74AC80085FBA0 /* ShowDetialsBookedVC.swift in Sources */,
+				7660B1D924C7382C0085FBA0 /* ClientData.swift in Sources */,
 				767920232450ABD40097D2C8 /* ShopsProfileVC.swift in Sources */,
+				7660B1D524C65F490085FBA0 /* ShowUserBookedVC.swift in Sources */,
 				7679201B244CF7270097D2C8 /* itemsVC.swift in Sources */,
 				7679200F244CA3320097D2C8 /* CategoryCell.swift in Sources */,
 				760DFABA23F047600018D6D7 /* Extention.swift in Sources */,

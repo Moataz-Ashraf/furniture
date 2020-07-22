@@ -53,10 +53,13 @@ extension ShopsProfileVC : UICollectionViewDelegate,UICollectionViewDataSource,U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
         navigationController?.pushViewController(ItemsVC(), animated: true)
+        }else if indexPath.row == 1{
+            navigationController?.pushViewController(ShopsBookedVC(NameShop: self.nameLabel.text!), animated: true)
         }
         else if indexPath.row == 2{
-            navigationController?.pushViewController(AddNewItemsVC(), animated: true)
+            navigationController?.pushViewController(AddNewItemsVC(shopName: self.nameLabel.text!), animated: true)
         }
+        
     }
     
     

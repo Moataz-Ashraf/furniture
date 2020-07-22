@@ -10,7 +10,9 @@ import UIKit
 
 class ShowItemVC: UIViewController {
     var phoneNumber : String?
-    
+    var KeyOfProduct : String?
+    var CurType : String?
+     var CurShop : String?
     let BackgroundImageView: UIImageView = {
         let iv = UIImageView()
         
@@ -84,12 +86,43 @@ class ShowItemVC: UIViewController {
                   
                   return bu
               }()
-    @objc func Booked(){
-        let vc = BookedVC(CurImage: self.imgView.image!)
+    let BuDelete : UIButton = {
+        let bu = UIButton()
+        bu.setImage(UIImage(named:"004-cross")!.withRenderingMode(.alwaysOriginal), for: .normal)
+        //bu.setTitle("Delete", for: .normal)
+       
         
+       // bu.layer.cornerRadius = 25
+       // bu.addTarget(self, action: #selector(ACDelete), for: .touchUpInside)
+        
+        
+        return bu
+    }()
+    let BuAccept : UIButton = {
+        let bu = UIButton()
+        bu.setImage(UIImage(named:"003-tick")!.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        return bu
+    }()
+    @objc func Booked(){
+        let vc = BookedVC(curKeyOfProduct: self.KeyOfProduct!)
+        vc.curImage = self.imgView.image!
+        vc.CurShop = self.CurShop
+        vc.CurType = self.CurType
             navigationController?.pushViewController(vc, animated: true)
     
     }
+//    @objc func ACDelete() {
+//           let alertController = UIAlertController(title: nil, message: "Are you sure you want to Delete?", preferredStyle: .actionSheet)
+//           alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+//               self.DeleteAction()
+//           }))
+//           alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//           present(alertController, animated: true, completion: nil)
+//       }
+//    func DeleteAction(){
+//
+//    }
     
     @objc func Call(){
          if let phoneCallURL = URL(string: "telprompt://\(phoneNumber!)") {
@@ -151,6 +184,8 @@ class ShowItemVC: UIViewController {
         view.addSubview(TypeLabel)
         view.addSubview(BuCall)
          view.addSubview(BuBooked)
+        view.addSubview(BuDelete)
+        view.addSubview(BuAccept)
         //BuHome.anchor(bottom:view.bottomAnchor,paddingBottom: -25,width: 50,height: 50)
        //BuHome.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         BackgroundImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right:view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width:
@@ -158,6 +193,12 @@ class ShowItemVC: UIViewController {
         MiddleView.anchor( width: UIScreen.main.bounds.width-30, height: 250)
         MiddleView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         MiddleView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        BuAccept.anchor(top:MiddleView.bottomAnchor,paddingTop: 5,width:50 ,height: 50)
+          //BuDelete.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        BuDelete.anchor(top:MiddleView.bottomAnchor,left:view.leftAnchor,right: BuAccept.leftAnchor,paddingTop: 5,paddingLeft: (UIScreen.main.bounds.width-view.center.x)-50,paddingRight: 20, width:50 ,height: 50 )
+      
         
         imgView.anchor(bottom:NameLabel.topAnchor,paddingBottom: 0,width: UIScreen.main.bounds.width-60,height: 260)
         imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -177,131 +218,3 @@ class ShowItemVC: UIViewController {
         BuBooked.anchor(bottom: BuCall.topAnchor, right: MiddleView.rightAnchor,paddingBottom: 10 ,paddingRight: 10,width: 50,height: 50)
     }
 }
-//    var imgView: UIImageView = {
-//        let iv = UIImageView()
-//        iv.image = #imageLiteral(resourceName: "a50291cf7baa9d43d3880c734be9efb7")
-//
-//        iv.contentMode = .scaleAspectFit
-//        iv.backgroundColor = UIColor.white//.darken(byPercentage: 0.1)
-//        iv.layer.cornerRadius = 50
-//        //iv.layer.borderColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0).cgColor
-//        iv.clipsToBounds = true
-//        //iv.layer.borderWidth = 2
-//        return iv
-//    }()
-//    let NameLabel: UILabel = {
-//        let label = UILabel()
-//       label.font = UIFont.boldSystemFont(ofSize: 22)
-//        label.textColor = .red
-//        label.text = "Moka Sofa"
-//        return label
-//    }()
-//    var DescriptionLabel : UILabel!
-//
-//
-//    let ItemType: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .black
-//        label.font = UIFont.boldSystemFont(ofSize: 20)
-//        label.text = "Type  :  Sofa"
-//        return label
-//    }()
-//    let ItemPrice: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .black
-//        label.font = UIFont.boldSystemFont(ofSize: 20)
-//        label.text = "Price  :  3.4 $"
-//        return label
-//    }()
-//    let NameShop: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .black
-//        label.font = UIFont.boldSystemFont(ofSize: 20)
-//        label.text = "Shop  :  Shahen Shops"
-//        return label
-//    }()
-//    let BuContact: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Contact ", for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-//        button.setTitleColor(UIColor.white, for: .normal)
-//        button.backgroundColor = UIColor.flatGreenColorDark()
-//       // button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-//        button.layer.cornerRadius = 5
-//        return button
-//    }()
-//    let BuTry: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Try", for: .normal)
-//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-//        button.setTitleColor(UIColor.white, for: .normal)
-//        button.backgroundColor = UIColor(red:0.96, green:0.69, blue:0.21, alpha:1.0)//UIColor(red:0.42, green:0.79, blue:0.43, alpha:1.0)
-//       // button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-//        button.layer.cornerRadius = 5
-//        return button
-//    }()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        LayoutUI()
-//    }
-//
-//    //MARK: - Design Methods
-//    func ConfigureView(){
-//
-//        view.backgroundColor = UIColor.white.darken(byPercentage: 0.005)
-//
-//        title = "Item"
-//
-//        DescriptionLabel = UILabel()
-//
-//
-//
-//        DescriptionLabel.font = UIFont.boldSystemFont(ofSize: 15)
-//        DescriptionLabel.textColor = .black
-//        DescriptionLabel.numberOfLines = 0
-//        DescriptionLabel.lineBreakMode = .byWordWrapping
-//
-//    }
-//
-//    func AddSubView(){
-//        view.addSubview(imgView)
-//        view.addSubview(NameLabel)
-//        view.addSubview(ItemType)
-//        view.addSubview(ItemPrice)
-//        view.addSubview(NameShop)
-//        view.addSubview(BuContact)
-//        view.addSubview(BuTry)
-//
-//       // view.addSubview(DescriptionLabel)
-//    }
-//    func Constraints(){
-//
-//        imgView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
-//        imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//
-//
-//        NameLabel.anchor(top: imgView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//        NameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//
-//
-//        ItemType.translatesAutoresizingMaskIntoConstraints = false
-//        ItemType.anchor(top: NameLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 0)
-//
-//         ItemPrice.anchor(top: ItemType.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 7, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 0)
-//
-//         NameShop.anchor(top: ItemPrice.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 7, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 0)
-//
-//        BuContact.anchor(top: NameShop.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 30)
-//
-//         BuTry.anchor(top: BuContact.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 0, paddingRight: 5, width: 0, height: 50)
-//
-//    }
-//    func LayoutUI(){
-//        ConfigureView()
-//        AddSubView()
-//        Constraints()
-//
-//    }
-   
-    

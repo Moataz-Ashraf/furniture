@@ -22,6 +22,7 @@ class ItemsVC : UIViewController{
     var shops = [Shops]()
    
     var shopName : String!
+    
     var CollectionView : UICollectionView = {
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -45,7 +46,7 @@ class ItemsVC : UIViewController{
         authenticateUserAndConfigureView()
         
         activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
-        
+         activityIndicator.color = UIColor(named: "Color")!
        activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
@@ -69,7 +70,7 @@ class ItemsVC : UIViewController{
     }
     @objc func handleAddCell() {
        
-        navigationController?.pushViewController(AddNewItemsVC(), animated: true)
+        navigationController?.pushViewController(AddNewItemsVC(shopName: shopName), animated: true)
         
         
     }
@@ -115,7 +116,7 @@ class ItemsVC : UIViewController{
             guard let shop = snapshot.value as? [String:String] else { return }
               
                 
-                let NewShop = Shops(Shop: Shop(NameShops: self.shopName , ImageShops: ""), Products: Products(Phone: shop["Phone"]!, ProductImage: shop["ProductImage"]!, ProductName: shop["ProductName"]!, ProductPrice: shop["ProductPrice"]!, ProductType: .Sofas))
+                let NewShop = Shops(Shop: Shop(NameShops: self.shopName , ImageShops: ""), Products: ProductOfShop(Phone: shop["Phone"]!, ProductImage: shop["ProductImage"]!, ProductName: shop["ProductName"]!, ProductPrice: shop["ProductPrice"]!, ProductType: shop["ProductType"]!))
             self.shops.append(NewShop)
             self.CollectionView.reloadData()
             self.activityIndicator.stopAnimating()
@@ -210,14 +211,17 @@ extension ItemsVC : UICollectionViewDataSource, UICollectionViewDelegate ,UIColl
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let vc = ShowItemVC()
-       
+        vc.BuAccept.isHidden = true
+        vc.BuDelete.isHidden = true
+        vc.BuBooked.isHidden = true
+        vc.BuCall.isHidden = true
         //vc.BuContact.setTitle(shops[indexPath.row].Products.Phone, for: .normal)
         vc.imgView.image = convertBase64StringToImage(imageBase64String:shops[indexPath.row].Products.ProductImage)
         vc.title = shops[indexPath.row].Products.ProductName
         vc.phoneNumber = shops[indexPath.row].Products.Phone
         //vc.NameLabel.text = shops[indexPath.row].Products.ProductName
         vc.ShopLabel.text = "Shop : \(shops[indexPath.row].Shop.NameShops)"
-        vc.ItemPrice.text = "Price : \(shops[indexPath.row].Products.ProductPrice)"
+        vc.ItemPrice.text = "Price : \(shops[indexPath.row].Products.ProductPrice) $"
         vc.TypeLabel.text = "Type : \(shops[indexPath.row].Products.ProductType.description)"
         vc.BackgroundImageView.image = convertBase64StringToImage(imageBase64String:shops[indexPath.row].Products.ProductImage).blurred(radius: 30)
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

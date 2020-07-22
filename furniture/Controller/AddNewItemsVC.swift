@@ -109,12 +109,24 @@ class AddNewItemsVC: UIViewController {
         return button
     }()
     // MARK: - Init
+    private var shopName : String!
     
+    
+    init(shopName : String ){
+        self.shopName = shopName
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         LayoutUI()
         activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
-        
+         activityIndicator.color = UIColor(named: "Color")!
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
         view.addSubview(activityIndicator)
@@ -235,6 +247,7 @@ class AddNewItemsVC: UIViewController {
             guard let CurUser = Auth.auth().currentUser?.uid else{return}
             
             let values : [String : Any] = ["ProductName" : ProductNameTextField.text! , "ProductType" : TypeTextField.text! ,"ProductPrice" : PriceTextField.text! ,"Phone" : PhoneTextField.text! ,"ProductImage":convertImageToBase64String(img: profileImageView.image!)]
+            let valuesOfProducts : [String : Any] = ["ProductName" : ProductNameTextField.text! , "ProductType" : TypeTextField.text! ,"ProductPrice" : PriceTextField.text! ,"Phone" : PhoneTextField.text! ,"ProductImage":convertImageToBase64String(img: profileImageView.image!),"NameShops":shopName!]
             
             let ref = Database.database().reference().child("Shops")
             ref.child(CurUser).child("Products").childByAutoId().setValue(values){
@@ -253,6 +266,8 @@ class AddNewItemsVC: UIViewController {
                     //self.navigationController?.pushViewController(ItemsVC(), animated: true)
                 }
             }
+            let refProduct = Database.database().reference().child("Products")
+            refProduct.child(TypeTextField.text!).childByAutoId().setValue(valuesOfProducts)
             
         }
         

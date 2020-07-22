@@ -1,8 +1,8 @@
 //
-//  ShopsProfileVC.swift
-//  MyInstagram
+//  UserProfileVC.swift
+//  furniture
 //
-//  Created by Moataz on 4/22/20.
+//  Created by Moataz on 7/20/20.
 //  Copyright © 2020 Moataz. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 
-class ShopsProfileVC : UIViewController{
+class UserProfileVC : UIViewController{
     
     // MARK: - UI Design
     
@@ -20,10 +20,6 @@ class ShopsProfileVC : UIViewController{
     
     fileprivate var activityIndicator: UIActivityIndicatorView!
     
-    
-    //MARK: - CollectionViewProperties
-    let reuseIdentifer = "ProfileCell"
-    var collectionView: UICollectionView!
     
     
     // MARK: - Properties
@@ -50,15 +46,28 @@ class ShopsProfileVC : UIViewController{
     }()
     
     
-    let profileImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "furniture-logo")
-        iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        iv.layer.borderWidth = 3
-        iv.layer.borderColor = UIColor.white.cgColor
-        return iv
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        return tapGesture
     }()
+    
+    private lazy var profileImageView: UIImageView = {
+           let imageView = UIImageView()
+           imageView.addGestureRecognizer(tapGesture)
+           imageView.isUserInteractionEnabled = true
+           imageView.translatesAutoresizingMaskIntoConstraints = false
+           imageView.clipsToBounds = true
+           imageView.contentMode = .scaleAspectFit
+           imageView.backgroundColor = UIColor.white.darken(byPercentage: 0.05)
+           //imageView.layer.cornerRadius = 50
+           imageView.layer.borderWidth = 3
+           imageView.layer.borderColor = UIColor.white.cgColor
+           
+           
+           return imageView
+       }()
+
+   
     
     let AddImgButton: UIButton = {
         let button = UIButton(type: .system)
@@ -71,15 +80,15 @@ class ShopsProfileVC : UIViewController{
     
     let CurLocationButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "icons8-location-100-4").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
+        //button.setImage(#imageLiteral(resourceName: "icons8-location-100-4").withRenderingMode(.alwaysOriginal), for: .normal)
+        //button.addTarget(self, action: #selector(handleMap), for: .touchUpInside)
         return button
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = " Shop Name "
+        label.text = " User Name "
         label.font = UIFont.boldSystemFont(ofSize: 26)
         label.textColor = .white
         return label
@@ -129,7 +138,20 @@ class ShopsProfileVC : UIViewController{
     }
     
     // MARK: - Selectors
-    
+    @objc func imageViewTapped() {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = false
+            
+            present(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+
     @objc func handleMessageUser() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
             print("Button capture")
@@ -169,32 +191,19 @@ class ShopsProfileVC : UIViewController{
         view.backgroundColor = UIColor.white.darken(byPercentage: 0.001)
         navigationController?.navigationBar.isHidden = true
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: reuseIdentifer)
-        collectionView.backgroundColor = UIColor.white.darken(byPercentage: 0.04)
-        
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
+       // activityIndicator.stopAnimating()
 
         
     }
     
     func AddSubView(){
         view.addSubview(containerView)
-        view.addSubview(collectionView)
-        
+       
     }
     func Constraints(){
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor,
                              right: view.rightAnchor, height: 400)
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     }
     func LayoutUI(){
         ConfigureView()
@@ -207,12 +216,13 @@ class ShopsProfileVC : UIViewController{
     func loadData(){
         
         
-            Database.database().reference().child("Shops").child(Auth.auth().currentUser!.uid).observe(.value, with: {(snapshot) in
+            Database.database().reference().child("Users").child(Auth.auth().currentUser!.uid).observe(.value, with: {(snapshot) in
                 guard let Shop = snapshot.value as?[String : Any] else { return }
-                self.nameLabel.text = Shop["NameShops"] as? String
+                self.nameLabel.text = Shop["UserName"] as? String
+                self.profileImageView.image = self.convertBase64StringToImage(imageBase64String:  Shop["ProfileImage"] as! String )
 //                let img = Shop["ImageShop"]as? String
 //                self.profileImageView.image = self.convertBase64StringToImage(imageBase64String:img!)
-//             
+//
                
                 self.activityIndicator.stopAnimating()
                 
@@ -271,14 +281,14 @@ class ShopsProfileVC : UIViewController{
 }
 
 
-extension ShopsProfileVC : UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
+extension UserProfileVC : UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.originalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
-        
+        Database.database().reference().child("Users").child(Auth.auth().currentUser!.uid).child("ProfileImage").setValue(self.convertImageToBase64String(img: image))
         
         profileImageView.image = image
     }
